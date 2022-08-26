@@ -25,6 +25,12 @@ export const validateRegisterValues = async (username, password, email) => {
 
   if (!email) return "Email cannot be empty";
   else if (!validator.isEmail(email)) return "Email is not valid";
+  else {
+    let userExists = await User.findOne({ email }).exec();
+    if (userExists) {
+      return "Email already taken";
+    }
+  }
 
   return "";
 };
