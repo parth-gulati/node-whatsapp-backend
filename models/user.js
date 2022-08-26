@@ -37,14 +37,18 @@ const userSchema = new Schema(
 userSchema.pre("save", function (next) {
   let user = this;
   if (user.isModified("password")) {
-    return bcrypt.hash(user.password, 12, function (err, hash) {
-      if (err) {
-        console.log("bcrypt bitched out", err);
-        return next(err);
+    return bcrypt.hash(
+      user.password,
+      Number.parseInt(process.env.SALT),
+      function (err, hash) {
+        if (err) {
+          console.log("bcrypt bitched out", err);
+          return next(err);
+        }
+        user.password = hash;
+        return next();
       }
-      user.password = hash;
-      return next();
-    });
+    );
   } else {
     return next();
   }
