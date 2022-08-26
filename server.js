@@ -25,7 +25,7 @@ app.use(express.json());
 const port = process.env.PORT || 6000;
 
 //importing all routes
-readdirSync("./routes").map((x) => app.use("/api", require(`/routes/${x}`)));
+readdirSync("./routes").map((x) => app.use("/api", require(`./routes/${x}`)));
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
