@@ -34,3 +34,15 @@ export const validateRegisterValues = async (username, password, email) => {
 
   return "";
 };
+
+export const validateLoginValues = async (email, password) => {
+  if (!password) {
+    return "Password is required";
+  } else if (!validator.isStrongPassword(password))
+    return "Password is too weak";
+
+  if (!email) return "Email cannot be empty";
+  else if (!validator.isEmail(email)) return "Email is not valid";
+
+  return "";
+};
